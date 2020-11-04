@@ -43,7 +43,7 @@ const encodings = {
     match: (str) => {
       // based on packages by https://git.coolaj86.com/coolaj86
       const atob = str => Buffer.from(str, 'base64').toString('binary');
-      const btoa = bin => Buffer.isPrototypeOf(bin)
+      const btoa = bin => Buffer.prototype.isPrototypeOf(bin)
           ? bin.toString('base64')
           : Buffer.from(bin.toString(), 'binary').toString('base64')
 
