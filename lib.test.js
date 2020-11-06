@@ -2,6 +2,10 @@ const a = require('assert')
 
 const { encodings } = require("./lib");
 
+const RED = 31
+const GREEN = 32
+const RESET = '\u001b[39m\u001b[49m'
+
 test("URL encoding - match", () => {
   a(encodings.url.match("foo%20bar"))
   a(!encodings.url.match("foobar"))
@@ -43,9 +47,15 @@ test("JWT encoding - decode", () => {
 function test(name, fn) {
   try {
     fn()
-    console.log(`OK: ${name}`)
+    greenFirst('PASS', name)
   } catch (ex) {
-    console.error(`failed: ${name}`, ex)
-    process.exit(1)
+    redFirst('FAIL', name, ex)
   }
+}
+
+function greenFirst(text, ...rest) {
+  console.log(`\u001b[${GREEN}m${text}\u001b${RESET}`, ...rest)
+}
+function redFirst(text, ...rest) {
+  console.log(`\u001b[${RED}m${text}\u001b${RESET}`, ...rest)
 }

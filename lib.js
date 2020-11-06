@@ -1,8 +1,3 @@
-const { output, levels } = require("./output");
-
-const out = output(levels.VERBOSE)
-// const out = output(levels.NORMAL)
-
 const encodings = {
   url: {
     match: (str) => {
@@ -34,7 +29,6 @@ const encodings = {
 
       // if we have the required number of url-encoded chars, the string
       // is considered to be url-encoded
-      out.scope('url').debug(`percent encoded: ${n}, required: ${required}`)
       return n >= required ? true : false;
     },
     decode: (str) => decodeURIComponent(str),
@@ -87,25 +81,6 @@ const encodings = {
   },
 };
 
-const encodingsOrder = ["url", "base64", "jwt"];
-
-const decode = (input) => {
-  let result = input;
-  for (const encodingName of encodingsOrder) {
-    out.scope(`[${encodingName}] `)
-    const encoding = encodings[encodingName];
-    if (encoding.match(result)) {
-      out.debug(`input "${result}" matched, decoding...`)
-      result = encoding.decode(result);
-      out.results(`decoded: "${result}"`)
-    } else {
-      out.debug(`input "${result}" does not seem to be encoded with "${encodingName}"`)
-    }
-  }
-  return result;
-};
-
 module.exports = {
   encodings,
-  decode,
 };
