@@ -1,0 +1,34 @@
+$ decode Zm9vIGJhcg==
+foo bar
+
+$ decode https%3A%2F%2Flocalhost%3A8080%2Ffoo%2Fbar
+https://localhost:8080/foo/bar
+
+$ decode --verbose Zm9vIGJhcg==
+[ url ] matching "Zm9vIGJhcg=="
+[ url ] did not match
+[ base64 ] matching "Zm9vIGJhcg=="
+[ base64 ] matched
+[ base64 ] decoding "Zm9vIGJhcg=="
+[ base64 ] decoded: "foo bar"
+[ base64 ] passing decoded value to next match/encode (use --no-pipe to avoid this)
+[ jwt ] matching "foo bar"
+[ jwt ] did not match
+foo bar
+
+$ decode --no-decode Zm9vIGJhcg==
+base64
+
+$ decode eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+{
+  "header": {
+    "alg": "HS256",
+    "typ": "JWT"
+  },
+  "payload": {
+    "sub": "1234567890",
+    "name": "John Doe",
+    "iat": 1516239022
+  },
+  "signature": "SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
