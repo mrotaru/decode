@@ -7,16 +7,24 @@ To install: `npm i -g mrotaru/decode`
 Output of `--help` below.
 
 ```
+decode v.1.0.2
+
+  Apply simple heuristics to a string, detecting various common encodings. The
+  attempted decodings are, in order: URL, base64 and JWT. When a string seems
+  to match an encoding, it is decoded and the result is passed ('piped') to the
+  next encoding processor. The result of the last successfull decoding is printed
+  as the output.
+  
 Functional Options
 
   All of these are boolean and can be negated by prefixing with "no-"; for
-  example, to disable piping, use the '--no-pipe' option. Note that some are
-  disabled by default - --bail and --first.
-
+  example, to disable piping, use the '--no-pipe' option.
+  
     --match        attempt to match input to an encoding before decoding (default: true)
-    --decode       attempt to decode input (default: true)
+    --decode       attempt to decode input; when false, only print detected encoding (default: true)
     --pipe         pass the result of each decoding as the input for the following match/decode (default: true)
-    --bail         exit on first decode failure, or first match failure if --no-decode (default: false)
+    --color        use colors (ANSI codes) when printing decoded JWT token; negate to get valid JSON (default: true)
+    --bail         exit on first decode failure; if --no-decode, exit on first match failure (default: false)
     --first        exit on first successful decode, or first successful match if --no-decode (default: false)
 
 Other
@@ -30,10 +38,10 @@ Examples
 
   $ decode Zm9vIGJhcg==
   foo bar
-
+  
   $ decode https%3A%2F%2Flocalhost%3A8080%2Ffoo%2Fbar
   https://localhost:8080/foo/bar
-
+  
   $ decode --verbose Zm9vIGJhcg==
   [ url ] matching "Zm9vIGJhcg=="
   [ url ] did not match
@@ -45,10 +53,10 @@ Examples
   [ jwt ] matching "foo bar"
   [ jwt ] did not match
   foo bar
-
+  
   $ decode --no-decode Zm9vIGJhcg==
   base64
-
+  
   $ decode eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
   {
     "header": {
@@ -62,4 +70,5 @@ Examples
     },
     "signature": "SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
   }
+  
 ```

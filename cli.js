@@ -161,16 +161,16 @@ function ensureBooleanAndSet(optionName, value, arg) {
 function printHelp() {
   console.log(`\ndecode v.${version}`);
   console.log(`
-  Apply simple heuristics to a string, detecting various common encodings and
-  printing the decoded result. The attempted decodings are, in order: URL,
-  base64 and JWT. When a string seems to match an encoding, it is decoded and
-  passed to the next encoding processor.
+  Apply simple heuristics to a string, detecting various common encodings. The
+  attempted decodings are, in order: URL, base64 and JWT. When a string seems
+  to match an encoding, it is decoded and the result is passed ('piped') to the
+  next encoding processor. The result of the last successfull decoding is printed
+  as the output.
   `);
   console.log(`Functional Options`);
   console.log(`
   All of these are boolean and can be negated by prefixing with "no-"; for
-  example, to disable piping, use the '--no-pipe' option. Note that some are
-  disabled by default - --bail and --first.
+  example, to disable piping, use the '--no-pipe' option.
   `);
   Object.keys(config).forEach(name => {
     if (Array.isArray(config[name])) {
