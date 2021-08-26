@@ -76,7 +76,7 @@ const encodings = {
           result[key] = value;
         }
       }
-      return JSON.stringify(result, null, 2);
+      return result
     },
   },
 };
