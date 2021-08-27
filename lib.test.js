@@ -32,7 +32,7 @@ test("JWT encoding - match", () => {
 
 test("JWT encoding - decode", () => {
   const decoded = encodings.jwt.decode(jwt1)
-  a(decoded === `{
+  a.deepEqual(decoded, {
   "header": {
     "alg": "HS256",
     "typ": "JWT"
@@ -41,7 +41,7 @@ test("JWT encoding - decode", () => {
     "iat": 1516239022
   },
   "signature": "tbDepxpstvGdW8TC3G8zg4B6rUYAOvfzdceoH48wgRQ"
-}`)
+})
 })
 
 function test(name, fn) {
